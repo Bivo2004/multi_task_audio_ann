@@ -1,0 +1,11 @@
+# Ignore the datasets
+data/
+
+# Ignore the heavy model weights (but keep the charts)
+models/*.pth
+
+# Ignore Python cache and environment files
+__pycache__/
+*.pyc
+.env
+.DS_Store
