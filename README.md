@@ -30,9 +30,4 @@ You can interact with the live model from any device via Hugging Face Spaces:
 
 ## 💻 Local Setup & Execution
 
-If you wish to run the app locally on your own machine (supports both CPU and GPU execution):
-
-**1. Clone the repository:**
-```bash
-git clone [https://github.com/YOUR_GITHUB_USERNAME/multi_task_audio_ann.git](https://github.com/YOUR_GITHUB_USERNAME/multi_task_audio_ann.git)
-cd multi_task_audio_ann
+If you wish to run the app locally on your own machine, you absolutely can! (supports both CPU and GPU execution).
