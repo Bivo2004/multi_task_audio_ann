@@ -3,7 +3,6 @@ import sys
 import torch
 import librosa
 import numpy as np
-import soundfile as sf
 import gradio as gr
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "src")))
@@ -98,7 +97,8 @@ def predict_emotion_only(audio_file):
     return predict_full_audio(audio_file, task="speech")
 
 # --- Build the Gradio UI ---
-with gr.Blocks(theme=gr.themes.Soft()) as interface:
+# FIX 1: Removed theme from Blocks constructor to clear the warning
+with gr.Blocks() as interface:
     gr.Markdown("# 🎵 Multi-Task Audio Analyzer")
     gr.Markdown("Welcome! Upload full-length songs or voice notes. The AI will slice the audio into chunks, analyze them all simultaneously, and average the results for maximum accuracy!")
     
@@ -106,7 +106,6 @@ with gr.Blocks(theme=gr.themes.Soft()) as interface:
         with gr.TabItem("🎸 Music Genre Predictor"):
             with gr.Row():
                 with gr.Column():
-                    # Forced to upload only
                     audio_music = gr.Audio(sources=["upload"], type="filepath", label="Upload a Full Song")
                     btn_music = gr.Button("Analyze Full Song", variant="primary")
                 with gr.Column():
@@ -116,7 +115,6 @@ with gr.Blocks(theme=gr.themes.Soft()) as interface:
         with gr.TabItem("🗣️ Speech Emotion Analyzer"):
             with gr.Row():
                 with gr.Column():
-                    # GUARANTEED FIX: Forced to upload only. Bypasses the browser microphone crash.
                     audio_speech = gr.Audio(sources=["upload"], type="filepath", label="Upload a Voice Note")
                     btn_speech = gr.Button("Analyze Emotion", variant="primary")
                 with gr.Column():
@@ -124,4 +122,5 @@ with gr.Blocks(theme=gr.themes.Soft()) as interface:
             btn_speech.click(predict_emotion_only, inputs=audio_speech, outputs=out_speech)
 
 if __name__ == "__main__":
-    interface.launch()
+    # FIX 2: Moved theme here and explicitly disabled SSR to stop the black screen hang
+    interface.launch(theme=gr.themes.Soft(), ssr_mode=False)
